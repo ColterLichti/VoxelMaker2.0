@@ -46,9 +46,11 @@ export class UIManager {
 
     showPage(name) {
         if (name !== undefined && name !== '' && this._page_list[name] !== undefined) {
-            this._page_list.forEach(page => {
+            for(let key in this._page_list){
+                let page = this._page_list[key];
                 page.enabled = false;
-            });
+            }
+
             this._page_list[name].enabled = true;
             this._page_list[name].onPageShow();
         }

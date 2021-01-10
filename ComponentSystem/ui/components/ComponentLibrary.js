@@ -25,6 +25,8 @@ export class AppPage extends Component {
     setContextObject(obj){
         this._context = obj;
     }
+
+    onPageShow(){};
 }
 
 export class VerticalRail extends Component {

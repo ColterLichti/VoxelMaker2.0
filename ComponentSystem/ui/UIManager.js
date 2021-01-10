@@ -4,6 +4,7 @@ export class UIManager {
     _key_counter;
     _app_window;
     _stylesheet_element;
+    _page_list;
 
     constructor() {
         this._key_counter = 0;
@@ -18,39 +19,40 @@ export class UIManager {
         this._stylesheet_element.type = 'text/css';
         this._stylesheet_element.rel = 'stylesheet';
         document.head.appendChild(this._stylesheet_element);
+
+        // Intantiate page list
+        this._page_list = new Array();
     }
 
-    addPage(page) {
-        if (page instanceof Comps.AppPage) {
+    addPage(name, page) {
+        if (name !== undefined && name !== '', page instanceof Comps.AppPage) {
             page.enabled = !this._app_window.hasChildren;
             this._app_window.add(page);
+            this._page_list[name] = page;
         }
         else {
-            console.warn('Can\'t add non page object!');
+            console.warn('Must provide a valid page and name/alias!');
         }
     }
 
-    removePage(page) {
-        if (page instanceof Comps.AppPage) {
-            this._app_window.remove(page);
-        }
-        else {
-            console.warn('Can\'t remove non page object!');
-        }
-
-        console.log(this._app_window._child_components);
-    }
-
-    showPage(page) {
-        if (page instanceof Comps.AppPage) {
-            for (let key in this._app_window._child_components) {
-                if (page === this._app_window._child_components[key]) {
-                    this._app_window._child_components[key].enabled = true;
-                }
-                else {
-                    this._app_window._child_components[key].enabled = false;
-                }
+    removePage(name) {
+        if (name !== undefined && name !== '') {
+            if (this._page_list[name] !== undefined) {
+                this._app_window.remove(this._page_list[name]);
+                delete this._page_list[name];
             }
+        }
+    }
+
+    showPage(name) {
+        if (name !== undefined && name !== '' && this._page_list[name] !== undefined) {
+            this._page_list.forEach(page => {
+                page.enabled = false;
+            });
+            this._page_list[name].enabled = true;
+        }
+        else {
+            console.warn('Could not find requested page: ' + name);
         }
     }
 

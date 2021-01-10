@@ -50,6 +50,7 @@ export class UIManager {
                 page.enabled = false;
             });
             this._page_list[name].enabled = true;
+            this._page_list[name].onPageShow();
         }
         else {
             console.warn('Could not find requested page: ' + name);

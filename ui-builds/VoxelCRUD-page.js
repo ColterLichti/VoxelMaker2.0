@@ -1,4 +1,5 @@
 import * as Comps from '/ComponentSystem/ui/components/ComponentLibrary.js';
+import { Viewer3D } from '/ComponentSystem/ui/components/Viewer3D.js';
 
 // Build main page and assign it's variables
 // Card groups and more complex sub UI are built by sub functions
@@ -36,6 +37,8 @@ export function BUILD_VoxelCreation_page() {
     // Contains the data view
     let dataCard = BUILD_DataCard_card(ctx);
 
+    let viewerCard = BUILD_ViewerCard_card(ctx);
+
     // Lists all voxels
     let listCard = new Comps.CardGroup();
     listCard.grow = 1;
@@ -59,6 +62,7 @@ export function BUILD_VoxelCreation_page() {
             leftPane.add(navigationCard);
             leftPane.add(actionsCard);
             leftPane.add(dataCard);
+            leftPane.add(viewerCard);
 
         // Right pane
         splitPane.add(rightPane);
@@ -71,6 +75,10 @@ export function BUILD_VoxelCreation_page() {
         voxellistBox.add(new Comps.ListItem());
     }
     
+    page.onPageShow = ()=>{
+        ctx.voxelViewer.forceUpdate();
+    }
+
     page.setContextObject(ctx);
     return page;
 }
@@ -205,6 +213,20 @@ function BUILD_DataCard_card(ctx) {
             ctx.paVoxelRail.add(paLbl);
             ctx.paVoxelRail.add(ctx.partialDropdown);
             ctx.paVoxelRail.add(ctx.partialNewButton);
+
+    return card;
+}
+
+function BUILD_ViewerCard_card(ctx){
+    let card = new Comps.CardGroup();
+    card.minHeight = '250px';
+    let vRail = new Comps.VerticalRail();
+    vRail.grow = 1;
+    ctx.voxelViewer = new Viewer3D();
+
+    card.add(vRail);
+        vRail.add(ctx.voxelViewer);
+    
 
     return card;
 }

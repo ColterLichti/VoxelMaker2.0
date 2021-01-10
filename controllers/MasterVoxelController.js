@@ -7,7 +7,7 @@ export class MasterVoxelController extends Controller{
         super(application);
     }
 
-    createView(){
+    async createView(){
         this.view = BUILD_VoxelCreation_page();
         this.application.UI.addPage('voxel', this.view);
         let c = this.ctx;
@@ -15,7 +15,7 @@ export class MasterVoxelController extends Controller{
         // 🔊👂 Set up subsciptions here 🔊👂
 
         // ⚡ Annon func to stop the dumbest 'feature' of js. (this context change in handlers) ⚡
-        // ⚡ The event object has a target already you fucking mongs!                          ⚡
+        // ⚡ The event object has a target already you fools!                                  ⚡
         c.purePageButton.subscribe('click', (event)=>{this.NavigateToPurePage_handler(event)});
         c.partialPageButton.subscribe('click', (event)=>{this.NavigateToPartialPage_handler(event)});
         

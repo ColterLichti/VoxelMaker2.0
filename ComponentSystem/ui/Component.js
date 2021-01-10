@@ -71,6 +71,7 @@ export class Component {
     generateLabelComponent(text){
         if(this._dom_element.type == 'radio'){
             this._dom_element.setAttribute('value', text.toLowerCase());
+            this._dom_element.setAttribute('id', text.toLowerCase());
         }
         return new InputLabel(text, this);
     }

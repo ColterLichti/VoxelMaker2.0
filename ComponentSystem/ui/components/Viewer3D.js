@@ -21,7 +21,7 @@ export class Viewer3D extends Component {
                 writable: false
             },
             renderer: {
-                value: new Three.WebGLRenderer({ antialias: true }),
+                value: new Three.WebGLRenderer({ antialias: true, alpha: true }),
                 writable: false
             },
             'viewportResize': {
@@ -63,12 +63,12 @@ export class Viewer3D extends Component {
 
         // 🧪 For testing only 🧪
         const geometry = new Three.BoxGeometry();
-        for ( var i = 0; i < geometry.faces.length; i ++ ) {
-            var face  = geometry.faces[ i ];
-            for( var j = 0; j < 3; j++ ) {
-                let color = new Three.Color( 0xffffff );
-                color.setHex( Math.random() * 0xffffff );
-                face.vertexColors[ j ] = color;
+        for (var i = 0; i < geometry.faces.length; i++) {
+            var face = geometry.faces[i];
+            for (var j = 0; j < 3; j++) {
+                let color = new Three.Color(0xffffff);
+                color.setHex(Math.random() * 0xffffff);
+                face.vertexColors[j] = color;
             }
         }
 

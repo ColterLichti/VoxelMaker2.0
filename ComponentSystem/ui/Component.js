@@ -197,6 +197,14 @@ export class Component {
     get minWidth() {
         return this._dom_element.style.minWidth;
     }
+
+    set toolTip(val) {
+        this._dom_element.title = val;
+    }
+
+    get toolTip(){
+        return this._dom_element.title;
+    }
 }
 
 function removeByValue(value, array) {

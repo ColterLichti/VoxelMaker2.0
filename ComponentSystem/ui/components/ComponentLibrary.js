@@ -22,11 +22,11 @@ export class AppPage extends Component {
         return this._context;
     }
 
-    setContextObject(obj){
+    setContextObject(obj) {
         this._context = obj;
     }
 
-    onPageShow(){};
+    onPageShow() { };
 }
 
 export class VerticalRail extends Component {
@@ -221,7 +221,7 @@ export class DropDown extends Component {
         opt.disabled = true;
         opt.selected = true;
         opt.enabled = false;
-        opt.value='placeholder';
+        opt.value = 'placeholder';
         this._placeholder_option = opt;
         this.add(this._placeholder_option);
 
@@ -231,14 +231,14 @@ export class DropDown extends Component {
     }
 
     set placeholder(text) {
-        if(text !== undefined && text !== ''){
+        if (text !== undefined && text !== '') {
             this._placeholder_option.text = text;
             this._placeholder_option.enabled = true;
-            if(this._dom_element.children.length <= 1){
+            if (this._dom_element.children.length <= 1) {
                 this._placeholder_option.selected = true;
             }
         }
-        else{
+        else {
             this._placeholder_option.enabled = false;
         }
     }
@@ -247,7 +247,7 @@ export class DropDown extends Component {
         return this._placeholder_option.text;
     }
 
-    get value(){
+    get value() {
         return this._dom_element.value;
     }
 }
@@ -291,6 +291,95 @@ export class Option extends Component {
 
     get text() {
         return this._dom_element.innerHTML;
+    }
+}
+
+export class PureFaceButton extends Component {
+
+    constructor(orientation, direction) {
+        super('pure-face-button');
+
+        Object.defineProperties(this, {
+            wrapper: {
+                value: this.element('wrapper'),
+                writable: false,
+                enumerable: false
+            },
+            face: {
+                value: this.element('face'),
+                writable: false,
+                enumerable: false
+            },
+            button: {
+                value: this.element('aux-button'),
+                writable: false,
+                enumerable: false
+            },
+            letter: {
+                value: direction.substring(0, 1).toUpperCase(),
+                writable: false,
+                enumerable: false
+            },
+            orient: {
+                value: orientation.toLowerCase(),
+                writable: false,
+                enumerable: false
+            },
+            'layoutComponent': {
+                value: () => {
+                    // Build the face with wrapper
+                    this.wrapper.appendChild(this.face);
+                    this.button.innerHTML = 'ALL';
+
+                    let first;
+                    let second;
+                    if (this.orient === 'top') {
+                        this.button.classList.remove('orient-bottom');
+                        first = this.button;
+                        second = this.wrapper;
+                    }
+                    else if (this.orient === 'bottom') {
+                        this.button.classList.add('orient-bottom');
+                        first = this.wrapper;
+                        second = this.button;
+                    }
+
+                    this.domElement.appendChild(first);
+                    this.domElement.appendChild(second);
+                },
+                writable: false,
+                enumerable: false
+            },
+            'handleClicks_handler': {
+                value: (event) => {
+                    if (event.target === this.button) {
+                        let evt = new Event('aux-click');
+                        evt.aux = true;
+                        evt.face = false;
+                        evt.component = this;
+                        this.domElement.dispatchEvent(evt);
+                    }
+                    else if (event.target === this.face) {
+                        let evt = new Event('face-click');
+                        evt.aux = false;
+                        evt.face = true;
+                        evt.component = this;
+                        this.domElement.dispatchEvent(evt);
+                    }
+                },
+                writable: false,
+                enumerable: false
+            },
+        });
+
+        this.button.addEventListener('click', (event) => { this.handleClicks_handler(event) });
+        this.face.addEventListener('click', (event) => { this.handleClicks_handler(event) });
+
+        this.layoutComponent();
+    }
+
+    set faceImage(url) {
+        this.face.style.backgroundImage = "url('" + url + "')";
     }
 }
 

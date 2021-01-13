@@ -25,12 +25,10 @@ export class MasterVoxelController extends Controller {
 
     NavigateToPurePage_handler(event) {
         this.application.UI.showPage('pure');
-        console.log('Navigating...');
     }
 
     NavigateToPartialPage_handler(event) {
         this.application.UI.showPage('partial');
-        console.log('Navigating...');
     }
 
     TypeChanged_handler(event) {

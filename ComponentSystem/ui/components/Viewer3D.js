@@ -72,8 +72,6 @@ export class Viewer3D extends Component {
             }
         }
 
-        console.log(geometry);
-
         const material = new Three.MeshBasicMaterial({ color: 0xffffff, vertexColors: Three.VertexColors });
         this.cube = new Three.Mesh(geometry, material);
         this.scene.add(this.cube);

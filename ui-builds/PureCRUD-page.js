@@ -115,34 +115,44 @@ function BUILD_DataCard_card(ctx) {
     botAxis.justifyContent = 'space-around';
     botAxis.margin = '8px 0 0 0';
 
-    ctx.North = new Comps.PureFaceButton('top', 'north');
-    ctx.North.faceImage = '/images/north_t.png';
+    let checkURL = '/images/check.png';
 
-    ctx.East = new Comps.PureFaceButton('top', 'east');
-    ctx.East.faceImage = '/images/east_t.png';
+    ctx.faceButtons = [];
 
-    ctx.South = new Comps.PureFaceButton('bottom', 'south');
-    ctx.South.faceImage = '/images/south_t.png';
+    ctx.faceButtons['north'] = new Comps.PureFaceButton('top', 'north');
+    ctx.faceButtons['north'].defaultImageURL = '/images/north_t.png';
+    ctx.faceButtons['north'].selectedImageURL = checkURL;
 
-    ctx.West = new Comps.PureFaceButton('bottom', 'west');
-    ctx.West.faceImage = '/images/west_t.png';
+    ctx.faceButtons['east'] = new Comps.PureFaceButton('top', 'east');
+    ctx.faceButtons['east'].defaultImageURL = '/images/east_t.png';
+    ctx.faceButtons['east'].selectedImageURL = checkURL;
 
-    ctx.Up = new Comps.PureFaceButton('top', 'up');
-    ctx.Up.faceImage = '/images/up_t.png';
+    ctx.faceButtons['south'] = new Comps.PureFaceButton('bottom', 'south');
+    ctx.faceButtons['south'].defaultImageURL = '/images/south_t.png';
+    ctx.faceButtons['south'].selectedImageURL = checkURL;
 
-    ctx.Down = new Comps.PureFaceButton('bottom', 'down');
-    ctx.Down.faceImage = '/images/down_t.png';
+    ctx.faceButtons['west'] = new Comps.PureFaceButton('bottom', 'west');
+    ctx.faceButtons['west'].defaultImageURL = '/images/west_t.png';
+    ctx.faceButtons['west'].selectedImageURL = checkURL;
+
+    ctx.faceButtons['up'] = new Comps.PureFaceButton('top', 'up');
+    ctx.faceButtons['up'].defaultImageURL = '/images/up_t.png';
+    ctx.faceButtons['up'].selectedImageURL = checkURL;
+
+    ctx.faceButtons['down'] = new Comps.PureFaceButton('bottom', 'down');
+    ctx.faceButtons['down'].defaultImageURL = '/images/down_t.png';
+    ctx.faceButtons['down'].selectedImageURL = checkURL;
 
     card.add(vRail);
         vRail.add(dataHeading);
         vRail.add(topAxis);
-            topAxis.add(ctx.North);
-            topAxis.add(ctx.East);
-            topAxis.add(ctx.Up);
+            topAxis.add(ctx.faceButtons['north']);
+            topAxis.add(ctx.faceButtons['east']);
+            topAxis.add(ctx.faceButtons['up']);
         vRail.add(botAxis);
-            botAxis.add(ctx.South);
-            botAxis.add(ctx.West);
-            botAxis.add(ctx.Down);
+            botAxis.add(ctx.faceButtons['south']);
+            botAxis.add(ctx.faceButtons['west']);
+            botAxis.add(ctx.faceButtons['down']);
 
     return card;
 }

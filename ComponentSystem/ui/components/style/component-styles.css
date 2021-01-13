@@ -319,11 +319,9 @@ pure-face-button
         left: 0;
         bottom: 0;
         right: 0;
-        
         cursor: pointer;
         border: 2px dashed gray;
         background-color: var(--primary-fore);
-        background-image: url('https://www.designbust.com/download/1010/png/tik_tok_logo_png_transparent256.png');
         background-size: cover;
     }
         pure-face-button > wrapper > face:hover

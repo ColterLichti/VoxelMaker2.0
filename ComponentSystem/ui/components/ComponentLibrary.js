@@ -315,14 +315,29 @@ export class PureFaceButton extends Component {
                 writable: false,
                 enumerable: false
             },
-            letter: {
-                value: direction.substring(0, 1).toUpperCase(),
+            direction: {
+                value: direction.toLowerCase(),
                 writable: false,
                 enumerable: false
             },
             orient: {
                 value: orientation.toLowerCase(),
                 writable: false,
+                enumerable: false
+            },
+            _defaultImageURL: {
+                value: '',
+                writable: true,
+                enumerable: false
+            },
+            _selectedImageURL: {
+                value: '',
+                writable: true,
+                enumerable: false
+            },
+            _selected: {
+                value: false,
+                writable: true,
                 enumerable: false
             },
             'layoutComponent': {
@@ -378,8 +393,39 @@ export class PureFaceButton extends Component {
         this.layoutComponent();
     }
 
-    set faceImage(url) {
-        this.face.style.backgroundImage = "url('" + url + "')";
+    set defaultImageURL(url) {
+        this._defaultImageURL = url;
+        if (!this._selected)
+            this.face.style.backgroundImage = "url('" + this._defaultImageURL + "')";
+    }
+
+    get defaultImageURL() {
+        return this._defaultImageURL;
+    }
+
+    set selectedImageURL(url) {
+        this._selectedImageURL = url;
+        if (this._selected)
+            this.face.style.backgroundImage = "url('" + this._selectedImageURL + "')";
+    }
+
+    get selectedImageURL() {
+        return this._selectedImageURL;
+    }
+
+    set selected(val) {
+        if (val) {
+            this.face.style.backgroundImage = "url('" + this._selectedImageURL + "')";
+        }
+        else {
+            this.face.style.backgroundImage = "url('" + this._defaultImageURL + "')";
+        }
+
+        this._selected = val;
+    }
+
+    get selected() {
+        return this._selected;
     }
 }
 

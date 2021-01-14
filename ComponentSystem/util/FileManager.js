@@ -177,3 +177,43 @@ export class FileManager {
     }
     
 }
+// File contents loading functionality
+Object.defineProperties(FileManager,{
+    loadFile:{
+        value: (file, progressCallback)=>{
+            // Allow async behaviour
+            return new Promise((res, rej)=>{
+                if(file instanceof File){
+                    const fr = new FileReader();
+
+                    fr.onload = (event)=>{
+                        // Success return the result
+                        res(event.target.result);
+                    }
+
+                    fr.onprogress = (event)=>{
+                        // Callback progress if provided and we can determine length
+                        if (event.lengthComputable && progressCallback !== undefined) {
+                            let progress = ((event.loaded / event.total) * 100);
+                            progressCallback(progress);
+                        }
+                    }
+
+                    fr.onerror = (event)=>{
+                        // Failed return result (should be an error message)
+                        rej(event.target.result);
+                    }
+
+                    fr.readAsText(file);
+
+                }else{
+                    rej('"file" argument must be an instance of File object!');
+                }
+            });
+        },
+        writable: false,
+        enumerable: false,
+        configurable: false
+    }
+});
+

@@ -17,8 +17,16 @@ export function BUILD_PureCreation_page() {
 
     // Left split (vertical)
     let leftPane = new Comps.VerticalRail();
-    leftPane.width = '15%';
-    leftPane.minWidth = '275px';
+
+    let subSplit1 = new Comps.HorizontalRail();
+    //subSplit1.grow = 1;
+
+    let subSubSplit1 = new Comps.VerticalRail();
+    subSubSplit1.grow = 1;
+    subSubSplit1.justifyContent = 'space-between';
+
+    let subSubSplit2 = new Comps.VerticalRail();
+    subSubSplit2.grow = 1;
 
     // Right split (vertical)
     let rightPane = new Comps.VerticalRail();
@@ -30,13 +38,37 @@ export function BUILD_PureCreation_page() {
 
     let dataCard = BUILD_DataCard_card(ctx);
 
+    let viewCard = new Comps.CardGroup();
+    viewCard.height = '450px';
+    ctx.viewer = new Viewer3D();
+
+    let listCard = new Comps.CardGroup();
+    listCard.grow = 1;
+    listCard.minHeight = '10px';
+
+    ctx.voxelListBox = new Comps.ListBox();
+    ctx.voxelListBox.grow = 1;
+
     page.add(ctx.progressBar);
     page.add(splitPane);
         splitPane.add(leftPane);
-            leftPane.add(navCard);
-            leftPane.add(actionCard);
-            leftPane.add(dataCard);
+            leftPane.add(subSplit1);
+                subSplit1.add(subSubSplit1);
+                    subSubSplit1.add(navCard);
+                    subSubSplit1.add(actionCard);
+                subSplit1.add(subSubSplit2);
+                    subSubSplit2.add(dataCard);
+            leftPane.add(viewCard);
+                viewCard.add(ctx.viewer);
         splitPane.add(rightPane);
+            rightPane.add(listCard);
+                listCard.add(ctx.voxelListBox);
+
+
+    // 🧪 TESTING ONLY 🧪 
+    for (let i = 0; i < 100; i++) {
+        ctx.voxelListBox.add(new Comps.ListItem());
+    }
 
 
     page.setContextObject(ctx);
@@ -102,6 +134,7 @@ function BUILD_ActionCard_card(ctx) {
 
 function BUILD_DataCard_card(ctx) {
     let card = new Comps.CardGroup();
+    card.width = '200px';
     let vRail = new Comps.VerticalRail();
     vRail.grow = 1;
     let dataHeading = new Comps.Heading('Pure Data');

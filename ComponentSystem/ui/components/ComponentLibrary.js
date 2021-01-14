@@ -118,6 +118,10 @@ export class ProgressBar extends Component {
     get progress() {
         return this._bar_element.width.replace('%', '') * 1;
     }
+
+    progressCallback_handler(val){
+        this.progress = val;
+    }
 }
 
 export class InputLabel extends Component {

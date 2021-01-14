@@ -24,6 +24,8 @@
 /* Set body to theme background */
 body{
     background-color: var(--primary-back);
+    background-image: url('/images/voxelbackground.jpg');
+    background-repeat: repeat;
 }
 
 
@@ -181,6 +183,7 @@ heading-component
     display: flex;
     align-items: center;
     justify-content: center;
+    user-select: none;
 }
 
 

@@ -1,4 +1,5 @@
-
+import { OBJLoader } from '/node_modules/three/examples/jsm/loaders/OBJLoader.js';
+import { ObjectLoader } from '/node_modules/three/build/three.module.js';
 
 // Handles file IO in a more native style
 // File opening can be done async-ish with promise
@@ -8,10 +9,10 @@ export class FileManager {
         // Make sure core functions/properties are not changed!
         Object.defineProperties(this, {
             // How long to wait for events to finish firing
-            // (values over 100 will likely be noticed by the human eye)
+            // (values over 200 will likely be noticed by the human eye)
             // Too small of a value will cause cancel event to fail or misfire!
             eventDelayMS: {
-                value: 100,
+                value: 200,
                 writable: true,
                 enumerable: true,
                 configurable: false
@@ -210,6 +211,17 @@ Object.defineProperties(FileManager,{
                     rej('"file" argument must be an instance of File object!');
                 }
             });
+        },
+        writable: false,
+        enumerable: false,
+        configurable: false
+    },
+    parseOBJ:{
+        value: (text)=>{
+            const loader = new OBJLoader();
+            let mod = loader.parse(text);
+
+            return mod.children[0];
         },
         writable: false,
         enumerable: false,

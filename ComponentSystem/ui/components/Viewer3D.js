@@ -1,9 +1,10 @@
-import * as Three from '/node_modules/three/build/three.module.js';
+import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, MeshBasicMaterial, VertexColors, AmbientLight } from '/node_modules/three/build/three.module.js';
+import { BoxGeometry, Color } from '/node_modules/three/build/three.module.js';
+import { OrbitControls } from '/node_modules/three/examples/jsm/controls/OrbitControls.js'
 import { Component } from '/ComponentSystem/ui/Component.js';
+import { FacePickerControls } from '/ComponentSystem/ui/components/FacePickerControl.js';
 
 export class Viewer3D extends Component {
-    // 🧪 Test
-    cube;
 
     constructor() {
         super('viewer-three-dee');
@@ -13,15 +14,23 @@ export class Viewer3D extends Component {
         // Define constant members
         Object.defineProperties(this, {
             scene: {
-                value: new Three.Scene(),
+                value: new Scene(),
                 writable: false
             },
             camera: {
-                value: new Three.PerspectiveCamera(75, 16 / 9, 0.1, 1000),
+                value: new PerspectiveCamera(75, 16 / 9, 0.1, 1000),
                 writable: false
             },
             renderer: {
-                value: new Three.WebGLRenderer({ antialias: true, alpha: true }),
+                value: new WebGLRenderer({ antialias: true, alpha: true }),
+                writable: false
+            },
+            _children: {
+                value: [],
+                writable: false
+            },
+            _light: {
+                value: new AmbientLight( 0xffffff ),
                 writable: false
             },
             'viewportResize': {
@@ -48,34 +57,59 @@ export class Viewer3D extends Component {
             },
             'render': {
                 value: () => {
-                    this.cube.rotation.y += 0.01;
-                    this.cube.rotation.x += 0.01;
+                    this.orbitControls.update();
                     this.renderer.render(this.scene, this.camera);
                 },
                 writable: false,
                 enumerable: false
-            }
+            },
+            'addToView': {
+                value: (mesh) => {
+                    this.scene.add(mesh);
+                    this._children.push(mesh);
+                },
+                writable: false,
+                enumerable: false
+            },
+            'removeFromView': {
+                value: (mesh) => {
+                    this.scene.remove(mesh);
+                },
+                writable: false,
+                enumerable: false
+            },
+            'clearView': {
+                value: () => {
+                    for (let i = 0; i < this._children.length; i++) {
+                        const child = this._children[i];
+                        
+                        this.scene.remove(child);
+                    }
+
+                    this._children.length = 0;
+                },
+                writable: false,
+                enumerable: false
+            },
+        });
+
+        // Sperate define to ensure domElement is created first
+        Object.defineProperty(this, 'orbitControls', {
+            value: new OrbitControls(this.camera, this.renderer.domElement),
+            writable: false
+        });
+
+        Object.defineProperty(this, 'picker', {
+            value: new FacePickerControls(this.camera, this.scene, this.renderer.domElement),
+            writable: false
         });
 
         // Empty element and add canavas to component
         this._dom_element.innerHTML = '';
         this._dom_element.appendChild(this.renderer.domElement);
-
-        // 🧪 For testing only 🧪
-        const geometry = new Three.BoxGeometry();
-        for (var i = 0; i < geometry.faces.length; i++) {
-            var face = geometry.faces[i];
-            for (var j = 0; j < 3; j++) {
-                let color = new Three.Color(0xffffff);
-                color.setHex(Math.random() * 0xffffff);
-                face.vertexColors[j] = color;
-            }
-        }
-
-        const material = new Three.MeshBasicMaterial({ color: 0xffffff, vertexColors: Three.VertexColors });
-        this.cube = new Three.Mesh(geometry, material);
-        this.scene.add(this.cube);
         this.camera.position.z = 1.5;
+
+        this.scene.add(this._light);
 
         // Start the animation loop
         this.animationLoop();

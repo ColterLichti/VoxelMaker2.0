@@ -153,27 +153,27 @@ function BUILD_DataCard_card(ctx) {
     ctx.faceButtons = [];
 
     ctx.faceButtons['north'] = new Comps.PureFaceButton('top', 'north');
-    ctx.faceButtons['north'].defaultImageURL = '/images/north_t.png';
+    ctx.faceButtons['north'].defaultImageURL = '/images/t_north.png';
     ctx.faceButtons['north'].selectedImageURL = checkURL;
 
     ctx.faceButtons['east'] = new Comps.PureFaceButton('top', 'east');
-    ctx.faceButtons['east'].defaultImageURL = '/images/east_t.png';
+    ctx.faceButtons['east'].defaultImageURL = '/images/t_east.png';
     ctx.faceButtons['east'].selectedImageURL = checkURL;
 
     ctx.faceButtons['south'] = new Comps.PureFaceButton('bottom', 'south');
-    ctx.faceButtons['south'].defaultImageURL = '/images/south_t.png';
+    ctx.faceButtons['south'].defaultImageURL = '/images/t_south.png';
     ctx.faceButtons['south'].selectedImageURL = checkURL;
 
     ctx.faceButtons['west'] = new Comps.PureFaceButton('bottom', 'west');
-    ctx.faceButtons['west'].defaultImageURL = '/images/west_t.png';
+    ctx.faceButtons['west'].defaultImageURL = '/images/t_west.png';
     ctx.faceButtons['west'].selectedImageURL = checkURL;
 
     ctx.faceButtons['up'] = new Comps.PureFaceButton('top', 'up');
-    ctx.faceButtons['up'].defaultImageURL = '/images/up_t.png';
+    ctx.faceButtons['up'].defaultImageURL = '/images/t_up.png';
     ctx.faceButtons['up'].selectedImageURL = checkURL;
 
     ctx.faceButtons['down'] = new Comps.PureFaceButton('bottom', 'down');
-    ctx.faceButtons['down'].defaultImageURL = '/images/down_t.png';
+    ctx.faceButtons['down'].defaultImageURL = '/images/t_down.png';
     ctx.faceButtons['down'].selectedImageURL = checkURL;
 
     card.add(vRail);
